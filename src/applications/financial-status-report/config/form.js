@@ -437,12 +437,9 @@ const formConfig = {
           uiSchema: pages.resolutionOption.uiSchema,
           schema: pages.resolutionOption.schema,
         },
-        // New text field
+        // New resolution comment
         resolutionComment: {
-          title: formData =>
-            typeof formData.benefitType === 'string'
-              ? formData.benefitType
-              : 'Some default string',
+          title: 'Resolution comment',
           depends: formData =>
             formData.selectedDebtsAndCopays?.length > 0 &&
             formData['view:combinedFinancialStatusReport'],

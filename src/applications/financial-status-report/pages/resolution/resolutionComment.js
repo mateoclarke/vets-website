@@ -1,13 +1,11 @@
+import ResolutionAdditional from '../../components/ResolutionAdditional';
+
 export const uiSchema = {
   selectedDebtsAndCopays: {
     items: {
-      'ui:title': 'SOME TITLE',
+      'ui:title': ' ',
       resolutionComment: {
-        'ui:title': 'Your reason why or whatever',
-        'ui:widget': 'textarea',
-        'ui:errorMessages': {
-          required: 'idk do stuff',
-        },
+        'ui:widget': ResolutionAdditional,
       },
     },
   },
