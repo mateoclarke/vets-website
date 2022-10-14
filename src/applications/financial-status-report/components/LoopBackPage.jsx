@@ -20,13 +20,17 @@ const LoopBackPage = ({ goBack, goForward, data, goToPath, setFormData }) => {
     if (radio === 'true') {
       setFormData({
         ...data,
-        testArray: [...data.testArray, { name: 'name3' }],
+        testArray: [
+          ...data.testArray,
+          { name: `name${data.testArray.length}` },
+        ],
       });
     }
 
     // This is the magic, it will go to the next page if No is selected
     // and will looop back to the 'employment information' pages if Yes is selected
-    const destinationPath = `/employment-test/${data.testArray.length + 1}`;
+    const destinationPath = `/employment-test/${data.testArray.length}`;
+    // getting this url just right is being tricky, but the idea is there
     return radio === 'true' ? goToPath(destinationPath) : goForward(data);
   };
 

@@ -127,7 +127,7 @@ const formConfig = {
           schema: pages.employment.schema,
           initialData: {
             // We need to make sure Employment history is instanciated
-            testArray: [{ name: 'name1' }, { name: 'name2' }],
+            testArray: [{ name: 'name0' }, { name: 'name1' }],
           },
         },
         employmentTest1: {
