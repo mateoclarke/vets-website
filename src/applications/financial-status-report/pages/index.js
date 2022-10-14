@@ -43,6 +43,7 @@ import * as resolutionComments from './resolution/comments';
 import * as resolutionComment from './resolution/resolutionComment';
 import * as bankruptcyHistory from './bankruptcy';
 import * as bankruptcyHistoryRecords from './bankruptcy/records';
+import * as testPage1 from './income/employment/testPage1';
 
 export {
   veteranInfo,
@@ -90,4 +91,5 @@ export {
   bankruptcyHistory,
   bankruptcyHistoryRecords,
   contactInfo,
+  testPage1,
 };

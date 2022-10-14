@@ -10,6 +10,7 @@ import * as pages from '../pages';
 import { transform } from '../utils/transform';
 import { SubmissionAlert } from '../components/Alerts';
 import { WIZARD_STATUS } from '../wizard/constants';
+import LoopBackPage from '../components/LoopBackPage';
 
 const formConfig = {
   rootUrl: manifest.rootUrl,
@@ -116,18 +117,90 @@ const formConfig = {
     householdIncomeChapter: {
       title: 'Household income',
       pages: {
+        // ===================================================================================================
+
+        // ===================================================================================================
         employment: {
           path: 'employment',
           title: 'Employment',
           uiSchema: pages.employment.uiSchema,
           schema: pages.employment.schema,
+          initialData: {
+            // We need to make sure Employment history is instanciated
+            testArray: [{ name: 'name1' }, { name: 'name2' }],
+          },
         },
+        employmentTest1: {
+          // Placeholder page for testing
+          // This will be where we add employment information
+          // we can add as much as we want between here and addAdditionalEmployment
+          path: 'employment-test/:index',
+          title: 'Employment1',
+          showPagePerItem: true,
+          // TODO: see how we can access an array nested in multiple objects
+          arrayPath: 'testArray',
+          uiSchema: pages.testPage1.uiSchema,
+          schema: pages.testPage1.schema,
+          depends: formData => {
+            const { questions } = formData;
+            return (
+              questions.vetIsEmployed &&
+              formData.testArray.length > 0 &&
+              formData['view:enhancedFinancialStatusReport']
+            );
+          },
+        },
+        addAdditionalEmployment: {
+          // Looping page
+          // If yes is selected in this custom component then we will go
+          // back to employment-test/{testAray.length + 1} with a new value
+          path: 'employment-loop-test',
+          title: 'Add Additional Employment',
+          // TODO: see how we can access an array nested in multiple objects
+          // showPagePerItem: true,
+          // arrayPath: 'testArray',
+          depends: formData => {
+            const { questions } = formData;
+            return (
+              questions.vetIsEmployed &&
+              formData.testArray.length > 0 &&
+              formData['view:enhancedFinancialStatusReport']
+            );
+          },
+          CustomPage: LoopBackPage,
+          uiSchema: {},
+          schema: {
+            type: 'object',
+            properties: {
+              testArray: {
+                type: 'array',
+                items: {
+                  type: 'object',
+                  properties: {
+                    name: {
+                      type: 'string',
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
+        // ===================================================================================================
+
+        // ===================================================================================================
         employmentRecords: {
           path: 'employment-records',
           title: 'Employment',
           uiSchema: pages.employmentRecords.uiSchema,
           schema: pages.employmentRecords.schema,
-          depends: ({ questions }) => questions.vetIsEmployed,
+          depends: formData => {
+            const { questions } = formData;
+            return (
+              questions.vetIsEmployed &&
+              !formData['view:enhancedFinancialStatusReport']
+            );
+          },
           editModeOnReviewPage: true,
         },
         income: {
