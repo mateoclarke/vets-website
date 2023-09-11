@@ -3,7 +3,7 @@ import { NavLink, useParams } from 'react-router-dom';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import moment from 'moment';
 import { VaTelephone } from '@department-of-veterans-affairs/component-library/dist/react-bindings';
-import recordEvent from 'platform/monitoring/record-event';
+import { recordEvent } from '@department-of-veterans-affairs/platform-monitoring/exports';
 import BackLink from '../../components/BackLink';
 import {
   APPOINTMENT_STATUS,
@@ -154,7 +154,11 @@ export default function RequestedAppointmentDetailsPage() {
       ) : (
         <Breadcrumbs>
           <NavLink
-            to={`/health-care/schedule-view-va-appointments/appointments/requests/${id}`}
+            to={
+              featureBreadcrumbUrlUpdate
+                ? `/my-health/appointments/requests/${id}`
+                : `/health-care/schedule-view-va-appointments/appointments/requests/${id}`
+            }
           >
             Request detail
           </NavLink>

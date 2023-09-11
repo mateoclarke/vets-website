@@ -2,7 +2,6 @@ import React from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
 // eslint-disable-next-line import/no-unresolved
 import asyncLoader from '@department-of-veterans-affairs/platform-utilities/asyncLoader';
-import { connectDrupalSourceOfTruthCerner } from 'platform/utilities/cerner/dsot';
 import VAOSApp from './components/VAOSApp';
 import ErrorBoundary from './components/ErrorBoundary';
 import { captureError } from './utils/error';
@@ -28,29 +27,34 @@ function handleLoadError(err) {
 }
 
 export default function createRoutesWithStore(store) {
+  const newAppointmentPaths = ['/new-appointment', '/schedule'];
+  const vaccinePaths = [
+    '/new-covid-19-vaccine-appointment',
+    '/schedule/new-covid-19-vaccine-appointment',
+  ];
+
   return (
     <ErrorBoundary fullWidth>
       <VAOSApp>
         <Switch>
           <EnrolledRoute
-            path="/new-appointment"
-            component={asyncLoader(() =>
-              import(/* webpackChunkName: "vaos-form" */ './new-appointment')
-                .then(({ NewAppointment, reducer }) => {
-                  connectDrupalSourceOfTruthCerner(store.dispatch);
-                  store.injectReducer('newAppointment', reducer);
-                  return NewAppointment;
-                })
-                .catch(handleLoadError),
-            )}
-          />
-          <EnrolledRoute
-            path="/new-covid-19-vaccine-appointment"
+            path={vaccinePaths}
             component={asyncLoader(() =>
               import(/* webpackChunkName: "covid-19-vaccine" */ './covid-19-vaccine')
                 .then(({ NewBookingSection, reducer }) => {
                   store.injectReducer('covid19Vaccine', reducer);
                   return NewBookingSection;
+                })
+                .catch(handleLoadError),
+            )}
+          />
+          <EnrolledRoute
+            path={newAppointmentPaths}
+            component={asyncLoader(() =>
+              import(/* webpackChunkName: "vaos-form" */ './new-appointment')
+                .then(({ NewAppointment, reducer }) => {
+                  store.injectReducer('newAppointment', reducer);
+                  return NewAppointment;
                 })
                 .catch(handleLoadError),
             )}

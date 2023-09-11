@@ -35,10 +35,14 @@ import useFormUnsavedDataWarning from '../hooks/useFormUnsavedDataWarning';
 import useManualScrollRestoration from '../hooks/useManualScrollRestoration';
 import ScheduleCernerPage from './components/ScheduleCernerPage';
 import useVariantSortMethodTracking from './hooks/useVariantSortMethodTracking';
+import { selectFeatureBreadcrumbUrlUpdate } from '../redux/selectors';
 
 export function NewAppointment() {
   const isCernerOnlyPatient = useSelector(selectIsCernerOnlyPatient);
   const isNewAppointmentStarted = useSelector(selectIsNewAppointmentStarted);
+  const featureBreadcrumbUrlUpdate = useSelector(
+    selectFeatureBreadcrumbUrlUpdate,
+  );
 
   const match = useRouteMatch();
   const location = useLocation();
@@ -66,7 +70,14 @@ export function NewAppointment() {
   return (
     <FormLayout isReviewPage={location.pathname.includes('review')}>
       <Switch>
-        <Route path={`${match.url}/contact-info`} component={ContactInfoPage} />
+        <Route
+          path={
+            featureBreadcrumbUrlUpdate
+              ? `${match.url}/contact-information`
+              : `${match.url}/contact-info`
+          }
+          component={ContactInfoPage}
+        />
         <Route
           path={`${match.url}/choose-facility-type`}
           component={TypeOfFacilityPage}
@@ -96,11 +107,19 @@ export function NewAppointment() {
           component={DateTimeRequestPage}
         />
         <Route
-          path={`${match.url}/select-date`}
+          path={
+            featureBreadcrumbUrlUpdate
+              ? `${match.url}/date-time`
+              : `${match.url}/select-date`
+          }
           component={DateTimeSelectPage}
         />
         <Route
-          path={`${match.url}/va-facility-2`}
+          path={
+            featureBreadcrumbUrlUpdate
+              ? `${match.url}/location`
+              : `${match.url}/va-facility-2`
+          }
           component={VAFacilityPageV2}
         />
         <Route
@@ -119,9 +138,20 @@ export function NewAppointment() {
           path={`${match.url}/choose-closest-city`}
           component={ClosestCityStatePage}
         />
-        <Route path={`${match.url}/clinics`} component={ClinicChoicePage} />
         <Route
-          path={`${match.url}/reason-appointment`}
+          path={
+            featureBreadcrumbUrlUpdate
+              ? `${match.url}/clinic`
+              : `${match.url}/clinics`
+          }
+          component={ClinicChoicePage}
+        />
+        <Route
+          path={
+            featureBreadcrumbUrlUpdate
+              ? `${match.url}/reason`
+              : `${match.url}/reason-appointment`
+          }
           component={ReasonForAppointmentPage}
         />
         <Route path={`${match.url}/review`} component={ReviewPage} />
@@ -129,7 +159,10 @@ export function NewAppointment() {
           path={`${match.url}/confirmation`}
           component={ConfirmationPage}
         />
-        <Route path="/" component={TypeOfCarePage} />
+        <Route
+          path={featureBreadcrumbUrlUpdate ? `${match.url}` : '/'}
+          component={TypeOfCarePage}
+        />
       </Switch>
     </FormLayout>
   );
