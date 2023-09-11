@@ -7,13 +7,13 @@ import { medicationsUrls } from '../util/constants';
 
 const LandingPage = () => {
   const fullState = useSelector(state => state);
-  const medicationsUrl = !fullState.user.login.currentlyLoggedIn
-    ? medicationsUrls.prescriptionsUrl
-    : medicationsUrls.medicationsLogin;
+  const medicationsUrl = fullState.user.login.currentlyLoggedIn
+    ? medicationsUrls.MEDICATIONS_URL
+    : medicationsUrls.MEDICATIONS_LOGIN;
 
   const content = () => {
     return (
-      <div className="landing-page">
+      <div className="vads-l-col--12 medium-screen:vads-l-col--8">
         <div className="main-content">
           <section>
             <h1>About Medications</h1>
@@ -23,13 +23,22 @@ const LandingPage = () => {
             </p>
           </section>
           <section>
-            <a
-              className="vads-c-action-link--green"
-              href={medicationsUrl}
-              data-testid="prescriptions-nav-link"
-            >
-              Go to your medications
-            </a>
+            <div className="vads-u-border-left--7px vads-u-border-color--primary-alt-dark vads-u-background-color--gray-lightest vads-u-padding--3 medium-screen:vads-l-col--10">
+              <h3 className="vads-u-margin-top--0">
+                Manage your medications now
+              </h3>
+              <p>
+                Refill and track your VA prescriptions. And review all
+                medications in your VA medical records.
+              </p>
+              <a
+                className="vads-c-action-link--green"
+                href={medicationsUrl}
+                data-testid="prescriptions-nav-link"
+              >
+                Go to your medications
+              </a>
+            </div>
           </section>
           <section>
             <h2>What to know as you try out this tool</h2>
@@ -195,7 +204,7 @@ const LandingPage = () => {
                     target="_blank"
                     rel="noreferrer"
                   >
-                    Compose a message on My HealthVet
+                    Compose a message on My HealtheVet
                   </a>
                 </p>
                 <p>
@@ -220,7 +229,7 @@ const LandingPage = () => {
                 <h3 className="vads-u-font-size--h6" slot="headline">
                   How to renew prescriptions
                 </h3>
-                <p>
+                <p data-testid="renew-information-button">
                   If your prescription is too old to refill or has no refills
                   left, you’ll need to request a renewal. The fastest way to
                   renew is by calling the phone number on your prescription
@@ -256,14 +265,14 @@ const LandingPage = () => {
                   target="_blank"
                   rel="noreferrer"
                 >
-                  Compose a message on My HealthVet
+                  Compose a message on My HealtheVet
                 </a>
               </va-accordion-item>
               <va-accordion-item>
                 <h3 className="vads-u-font-size--h6" slot="headline">
                   How to confirm or update your mailing address
                 </h3>
-                <p>
+                <p data-testid="mailing-address-confirmation">
                   We’ll send your prescriptions to the address we have on file
                   for you. We ship to all addresses in the U.S. and its
                   territories. We don’t ship prescriptions to foreign countries.
@@ -280,7 +289,7 @@ const LandingPage = () => {
                 <h3 className="vads-u-font-size--h6" slot="headline">
                   How to review your allergies and reactions
                 </h3>
-                <p>
+                <p data-testid="allergies-reactions-review">
                   Make sure your providers know about all your allergies and
                   reactions to medications.
                 </p>
@@ -308,7 +317,7 @@ const LandingPage = () => {
   };
 
   return (
-    <div className="vads-u-margin-top--3 vads-u-margin-bottom--6">
+    <div className="landing-page vads-l-grid-container vads-u-margin-top--3 vads-u-margin-bottom--6">
       {content()}
     </div>
   );

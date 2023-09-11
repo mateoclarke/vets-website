@@ -33,7 +33,6 @@ import ConfirmationPage from '../containers/ConfirmationPage';
 import GetFormHelp from '../components/GetFormHelp';
 import ErrorText from '../components/ErrorText';
 import SubmissionError from '../components/SubmissionError';
-import SupportingDocumentsDescription from '../components/SupportingDocumentsDescription';
 import phoneUI from '../components/Phone';
 import { validateSponsorDeathDate } from '../validation';
 
@@ -61,6 +60,7 @@ import {
   isNotVeteranAndHasServiceName,
   buriedWSponsorsEligibility,
 } from '../utils/helpers';
+import SupportingFilesDescription from '../components/SupportingFilesDescription';
 
 const {
   claimant,
@@ -648,16 +648,17 @@ const formConfig = {
       },
     },
     supportingDocuments: {
-      title: 'Supporting documents',
+      title: 'Supporting files',
       pages: {
         supportingDocuments: {
           path: 'supporting-documents',
-          editModeOnReviewPage: true,
+          editModeOnReviewPage: false,
           uiSchema: {
-            'ui:description': SupportingDocumentsDescription,
+            'ui:description': SupportingFilesDescription,
             application: {
               preneedAttachments: fileUploadUI('Select files to upload', {
-                addAnotherLabel: 'Add another',
+                buttonText: 'Upload file',
+                addAnotherLabel: 'Upload another file',
                 fileUploadUrl: `${
                   environment.API_URL
                 }/v0/preneeds/preneed_attachments`,
@@ -675,10 +676,10 @@ const formConfig = {
                   confirmationCode: response.data.attributes.guid,
                 }),
                 attachmentSchema: {
-                  'ui:title': 'What kind of document is this?',
+                  'ui:title': 'What kind of file is this?',
                 },
                 attachmentName: {
-                  'ui:title': 'Document name',
+                  'ui:title': 'File name',
                 },
               }),
             },
@@ -805,16 +806,20 @@ const formConfig = {
                     first: { 'ui:required': isAuthorizedAgent },
                     last: { 'ui:required': isAuthorizedAgent },
                   }),
-                  mailingAddress: merge(
-                    {},
-                    address.uiSchema('Mailing address'),
-                    {
-                      country: { 'ui:required': isAuthorizedAgent },
-                      street: { 'ui:required': isAuthorizedAgent },
-                      city: { 'ui:required': isAuthorizedAgent },
-                      postalCode: { 'ui:required': isAuthorizedAgent },
-                    },
-                  ),
+                  mailingAddress: environment.isProduction()
+                    ? merge({}, address.uiSchema('Mailing address'), {
+                        country: { 'ui:required': isAuthorizedAgent },
+                        street: { 'ui:required': isAuthorizedAgent },
+                        city: { 'ui:required': isAuthorizedAgent },
+                        postalCode: { 'ui:required': isAuthorizedAgent },
+                      })
+                    : merge({}, address.uiSchema('Mailing address'), {
+                        country: { 'ui:required': isAuthorizedAgent },
+                        street: { 'ui:required': isAuthorizedAgent },
+                        city: { 'ui:required': isAuthorizedAgent },
+                        state: { 'ui:required': isAuthorizedAgent },
+                        postalCode: { 'ui:required': isAuthorizedAgent },
+                      }),
                   'view:contactInfo': {
                     'ui:title': 'Contact information',
                     applicantPhoneNumber: merge(
