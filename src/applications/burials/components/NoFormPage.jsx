@@ -340,7 +340,7 @@ export const NoFormPage = () => {
             </div>
             <br />
             <va-link
-              href="https://www.va.gov/burials-memorials/veterans-burial-allowance/"
+              href="/burials-memorials/veterans-burial-allowance/"
               text="Learn more about how to apply for VA burial benefits"
             />
           </va-alert>
@@ -420,7 +420,7 @@ export const NoFormPage = () => {
             </div>
             <br />
             <va-link
-              href="https://www.va.gov/burials-memorials/veterans-burial-allowance/"
+              href="/burials-memorials/veterans-burial-allowance/"
               text="Learn more about how to apply for VA burial benefits"
             />
           </va-alert>
@@ -456,7 +456,7 @@ export const NoFormPage = () => {
         </div>
         <br />
         <va-link
-          href="https://www.va.gov/burials-memorials/veterans-burial-allowance/"
+          href="/burials-memorials/veterans-burial-allowance/"
           text="Learn more about how to apply for VA burial benefits"
         />
       </va-alert>
