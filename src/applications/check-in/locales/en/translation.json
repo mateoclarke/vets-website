@@ -264,5 +264,7 @@
   "upcoming-appointments": "Upcoming Appointments",
   "loading-your-appointment-information": "Loading your appointment information…",
   "loading-your-upcoming-appointment-information": "Loading your upcoming appointment information…",
-  "error-retrieving-upcoming-appointments": "There was an error retreiving upcoming appointments"
+  "error-retrieving-upcoming-appointments": "There was an error retreiving upcoming appointments",
+  "details-for-appointment-on-date-at-time": "Details for {{ type }} appointment on {{ dateTime, date }} at {{ dateTime, time }}",
+  "appointment-on-date-at-time": "Appointment on {{dateTime, date}} at {{ dateTime, time}}"
 }
