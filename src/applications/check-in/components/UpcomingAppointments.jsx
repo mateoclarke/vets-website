@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 
-import { makeSelectApp } from '../selectors';
+import { makeSelectApp, makeSelectVeteranData } from '../selectors';
 import { useGetUpcomingAppointmentsData } from '../hooks/useGetUpcomingAppointmentsData';
 import { useUpdateError } from '../hooks/useUpdateError';
 import { APP_NAMES } from '../utils/appConstants';
@@ -11,21 +11,38 @@ import UpcomingAppointmentsList from './UpcomingAppointmentsList';
 
 const UpcomingAppointments = props => {
   const { router } = props;
-  const [isLoading, setIsLoading] = useState(true);
   const selectApp = useMemo(makeSelectApp, []);
   const { app } = useSelector(selectApp);
   const { t } = useTranslation();
   const { updateError } = useUpdateError();
   const {
-    isComplete,
+    isComplete: isUpcomingComplete,
+    isLoading: isUpcomingLoading,
     upcomingAppointmentsDataError,
-  } = useGetUpcomingAppointmentsData(true);
+    refreshUpcomingData,
+  } = useGetUpcomingAppointmentsData({ refreshNeeded: false });
+  const [isComplete, setIsComplete] = useState(isUpcomingComplete);
+  const [isLoading, setIsLoading] = useState(isUpcomingLoading);
+  const selectVeteranData = useMemo(makeSelectVeteranData, []);
+  const { upcomingAppointments } = useSelector(selectVeteranData);
 
   useEffect(
     () => {
-      setIsLoading(!isComplete);
+      if (!upcomingAppointments.length && !isComplete) {
+        refreshUpcomingData();
+      }
+      return () => {
+        setIsComplete(isUpcomingComplete);
+        setIsLoading(isUpcomingLoading);
+      };
     },
-    [isComplete],
+    [
+      upcomingAppointments,
+      isComplete,
+      refreshUpcomingData,
+      isUpcomingComplete,
+      isUpcomingLoading,
+    ],
   );
 
   useEffect(
@@ -72,7 +89,11 @@ const UpcomingAppointments = props => {
       <h2 data-testid="upcoming-appointments-header">
         {t('upcoming-appointments')}
       </h2>
-      <UpcomingAppointmentsList router={router} app={app} />
+      <UpcomingAppointmentsList
+        router={router}
+        app={app}
+        upcomingAppointments={upcomingAppointments}
+      />
     </div>
   );
 };
