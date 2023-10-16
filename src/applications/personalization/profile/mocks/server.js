@@ -61,7 +61,7 @@ const responses = {
       () =>
         res.json(
           generateFeatureToggles({
-            profileContacts: true,
+            profileContacts: false,
             profileLighthouseDirectDeposit: true,
             profileUseFieldEditingPage: true,
             profileUseHubPage: true,
