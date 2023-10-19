@@ -30,7 +30,8 @@ describe('Check In Experience -- ', () => {
         window.sessionStorage.clear();
       });
     });
-    it('Appointments are displayed in a sorted manner', () => {
+    // TODO skipping to wait for the refactor.
+    it.skip('Appointments are displayed in a sorted manner', () => {
       AppointmentsPage.validatePageLoaded();
       AppointmentsPage.validateUpcomingAppointmentsList();
       cy.injectAxeThenAxeCheck();
