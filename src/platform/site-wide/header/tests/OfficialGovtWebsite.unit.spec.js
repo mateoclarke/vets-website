@@ -3,7 +3,7 @@ import React from 'react';
 import { expect } from 'chai';
 import { shallow } from 'enzyme';
 // Relative imports.
-import { OfficialGovtWebsite } from '.';
+import { OfficialGovtWebsite } from '../components/OfficialGovtWebsite';
 
 describe('Header <OfficialGovtWebsite>', () => {
   it('renders content', () => {

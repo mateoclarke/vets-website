@@ -66,6 +66,10 @@ export const SubMenu = ({ subMenu, updateSubMenu }) => {
                   <a
                     className="vads-u-display--flex vads-u-text-decoration--none vads-u-margin--0 vads-u-padding--2 vads-u-color--white vads-u-width--full"
                     href={item?.href}
+                    data-e2e-id={item?.text
+                      ?.replaceAll(' ', '-')
+                      ?.replaceAll(/[{(,&)}]/g, '')
+                      .toLowerCase()}
                   >
                     {item?.text}
                   </a>

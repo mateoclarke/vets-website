@@ -3,7 +3,7 @@ import React from 'react';
 import { expect } from 'chai';
 import { shallow } from 'enzyme';
 // Relative imports.
-import { Logo } from '.';
+import { Logo } from '../components/Logo';
 
 describe('Header <Logo>', () => {
   it('renders content', () => {

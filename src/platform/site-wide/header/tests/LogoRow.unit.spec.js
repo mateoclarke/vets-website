@@ -4,7 +4,7 @@ import sinon from 'sinon';
 import { expect } from 'chai';
 import { shallow } from 'enzyme';
 // Relative imports.
-import { LogoRow } from '.';
+import { LogoRow } from '../components/LogoRow';
 
 describe('Header <LogoRow>', () => {
   it('renders correct content with no props', () => {
@@ -54,6 +54,7 @@ describe('Header <LogoRow>', () => {
         setIsMenuOpen={setIsMenuOpen}
       />,
     );
+
     wrapper.find('.header-menu-button').simulate('click');
 
     // Assertions.

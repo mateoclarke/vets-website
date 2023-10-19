@@ -4,7 +4,7 @@ import sinon from 'sinon';
 import { expect } from 'chai';
 import { shallow } from 'enzyme';
 // Relative imports.
-import { MenuItemLevel2 } from '.';
+import { MenuItemLevel2 } from '../components/MenuItemLevel2';
 
 describe('Header <MenuItemLevel2>', () => {
   it('renders an item with no children', () => {

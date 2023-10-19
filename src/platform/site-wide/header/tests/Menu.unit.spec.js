@@ -3,7 +3,7 @@ import React from 'react';
 import { expect } from 'chai';
 import { shallow } from 'enzyme';
 // Relative imports.
-import { Menu } from '.';
+import { Menu } from '../containers/Menu';
 
 describe('Header <Menu>', () => {
   it('does not render when isMenuOpen is falsey', () => {

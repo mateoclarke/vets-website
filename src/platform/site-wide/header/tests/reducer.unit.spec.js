@@ -1,8 +1,8 @@
 // Node modules.
 import { expect } from 'chai';
 // Relative imports.
-import headerMenuReducer, { initialState } from './reducer';
-import { UPDATE_EXPANDED_MENU_ID, UPDATE_SUB_MENU } from './constants';
+import headerMenuReducer, { initialState } from '../containers/Menu/reducer';
+import { UPDATE_EXPANDED_MENU_ID, UPDATE_SUB_MENU } from '../containers/Menu/constants';
 
 describe('Menu reducer', () => {
   it('initialState is what we expect', () => {

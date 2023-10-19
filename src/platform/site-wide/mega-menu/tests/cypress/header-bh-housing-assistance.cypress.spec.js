@@ -79,32 +79,71 @@ describe('global header - benefit hubs - housing assistance', () => {
     },
   ];
 
-  it('should correctly load the elements', () => {
-    cy.visit('/');
-    cy.injectAxeThenAxeCheck();
+  describe('desktop menu', () => {
+    it('should correctly load the elements', () => {
+      cy.visit('/');
+      cy.injectAxeThenAxeCheck();
 
-    h.verifyElement('.header');
+      h.verifyElement('.header');
 
-    const header = () => cy.get('.header');
+      const header = () => cy.get('.header');
 
-    header()
-      .scrollIntoView()
-      .within(() => {
-        const vaBenefitsAndHealthCareButton =
-          '[data-e2e-id="va-benefits-and-health-care-0"]';
+      header()
+        .scrollIntoView()
+        .within(() => {
+          const vaBenefitsAndHealthCareButton =
+            '[data-e2e-id="va-benefits-and-health-care-0"]';
 
-        // VA Benefits and Health Care
-        h.verifyElement(vaBenefitsAndHealthCareButton);
-        h.clickButton(vaBenefitsAndHealthCareButton);
+          // VA Benefits and Health Care
+          h.verifyElement(vaBenefitsAndHealthCareButton);
+          h.clickButton(vaBenefitsAndHealthCareButton);
 
-        // -> Housing assistance
-        h.verifyMenuItems(
-          housingAssistance,
-          headings,
-          links,
-          viewAll,
-          'Housing assistance',
-        );
+          // -> Housing assistance
+          h.verifyMenuItems(
+            housingAssistance,
+            headings,
+            links,
+            viewAll,
+            'Housing assistance',
+          );
+        });
+    });
+  });
+
+  describe('mobile menu', () => {
+    it('should correctly load the elements', () => {
+      cy.viewport(400, 1000);
+      cy.visit('/');
+      cy.injectAxeThenAxeCheck();
+
+      const menuSelector = '.header-menu-button';
+      h.verifyElement(menuSelector);
+      h.clickButton(menuSelector);
+
+      const headerNav = () => cy.get('#header-nav-items');
+
+      headerNav().within(() => {
+        const vaBenefitsAndHealthCareButton = () =>
+          cy.get('.header-menu-item-button').eq(0);
+        vaBenefitsAndHealthCareButton().click();
+
+        const housingAssistanceButton = () =>
+          cy.get('.header-menu-item-button').eq(6);
+        housingAssistanceButton().click();
+
+        const backToMenuButton = () => cy.get('#header-back-to-menu');
+        h.verifyElement(backToMenuButton);
+
+        const headerMenu = () => cy.get('.header-menu');
+
+        headerMenu()
+          .scrollIntoView()
+          .within(() => {
+            for (const link of links) {
+              h.verifyLink(`[data-e2e-id*="${link.id}"]`, link.text, link.href);
+            }
+          });
       });
+    });
   });
 });

@@ -4,7 +4,7 @@ import { expect } from 'chai';
 import { shallow } from 'enzyme';
 
 // 1st-party imports
-import { Header } from '.';
+import { Header } from '../components/Header';
 
 describe('Header <Header>', () => {
   const renderHeader = () => shallow(<Header showMegaMenu showNavLogin />);

@@ -4,7 +4,7 @@ import sinon from 'sinon';
 import { expect } from 'chai';
 import { shallow } from 'enzyme';
 // Relative imports.
-import { SubMenu } from '.';
+import { SubMenu } from '../components/SubMenu';
 
 const menuSections = [
   { text: 'Veterans Health Administration', href: 'https://www.va.gov/health' },

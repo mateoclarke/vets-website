@@ -21,7 +21,7 @@ describe('global header - benefit hubs - records', () => {
     );
   });
 
-  const burialsAndMemorials = '[data-e2e-id="vetnav-level2--records"]';
+  const records = '[data-e2e-id="vetnav-level2--records"]';
   const viewAll = {
     id: 'view-all-in-records',
     href: '/records',
@@ -63,7 +63,7 @@ describe('global header - benefit hubs - records', () => {
       text: 'Get Veteran ID cards',
     },
     {
-      id: 'request-your-military-records-dd-214',
+      id: 'request-your-military-records-dd',
       href: '/records/get-military-service-records',
       text: 'Request your military records (DD214)',
     },
@@ -89,32 +89,64 @@ describe('global header - benefit hubs - records', () => {
     },
   ];
 
-  it('should correctly load the elements', () => {
-    cy.visit('/');
-    cy.injectAxeThenAxeCheck();
+  describe('desktop menu', () => {
+    it('should correctly load the elements', () => {
+      cy.visit('/');
+      cy.injectAxeThenAxeCheck();
 
-    h.verifyElement('.header');
+      h.verifyElement('.header');
 
-    const header = () => cy.get('.header');
+      const header = () => cy.get('.header');
 
-    header()
-      .scrollIntoView()
-      .within(() => {
-        const vaBenefitsAndHealthCareButton =
-          '[data-e2e-id="va-benefits-and-health-care-0"]';
+      header()
+        .scrollIntoView()
+        .within(() => {
+          const vaBenefitsAndHealthCareButton =
+            '[data-e2e-id="va-benefits-and-health-care-0"]';
 
-        // VA Benefits and Health Care
-        h.verifyElement(vaBenefitsAndHealthCareButton);
-        h.clickButton(vaBenefitsAndHealthCareButton);
+          // VA Benefits and Health Care
+          h.verifyElement(vaBenefitsAndHealthCareButton);
+          h.clickButton(vaBenefitsAndHealthCareButton);
 
-        // -> Records
-        h.verifyMenuItems(
-          burialsAndMemorials,
-          headings,
-          links,
-          viewAll,
-          'Records',
-        );
+          // -> Records
+          h.verifyMenuItems(records, headings, links, viewAll, 'Records');
+        });
+    });
+  });
+
+  describe('mobile menu', () => {
+    it('should correctly load the elements', () => {
+      cy.viewport(400, 1000);
+      cy.visit('/');
+      cy.injectAxeThenAxeCheck();
+
+      const menuSelector = '.header-menu-button';
+      h.verifyElement(menuSelector);
+      h.clickButton(menuSelector);
+
+      const headerNav = () => cy.get('#header-nav-items');
+
+      headerNav().within(() => {
+        const vaBenefitsAndHealthCareButton = () =>
+          cy.get('.header-menu-item-button').eq(0);
+        vaBenefitsAndHealthCareButton().click();
+
+        const recordsButton = () => cy.get('.header-menu-item-button').eq(9);
+        recordsButton().click();
+
+        const backToMenuButton = () => cy.get('#header-back-to-menu');
+        h.verifyElement(backToMenuButton);
+
+        const headerMenu = () => cy.get('.header-menu');
+
+        headerMenu()
+          .scrollIntoView()
+          .within(() => {
+            for (const link of links) {
+              h.verifyLink(`[data-e2e-id*="${link.id}"]`, link.text, link.href);
+            }
+          });
       });
+    });
   });
 });

@@ -4,6 +4,8 @@ import * as h from '../../../../utilities/tests/header-footer/utilities/helpers'
 // IMPORTANT: These tests verify the accuracy of the VA.gov header against production (as of the time of writing this test)
 // and against header-footer-data.json, which is used to populate the header in local dev when content-build is not running.
 // It is important that both of these stay in parity with what is in production.
+//
+// Service member and family member benefits are also tested in here
 describe('global header - benefit hubs - health care', () => {
   Cypress.config({
     includeShadowDom: true,
@@ -89,26 +91,98 @@ describe('global header - benefit hubs - health care', () => {
     },
   ];
 
-  it('should correctly load the elements', () => {
-    cy.visit('/');
-    cy.injectAxeThenAxeCheck();
+  describe('desktop menu', () => {
+    it('should correctly load the elements', () => {
+      cy.visit('/');
+      cy.injectAxeThenAxeCheck();
 
-    h.verifyElement('.header');
+      h.verifyElement('.header');
 
-    const header = () => cy.get('.header');
+      const header = () => cy.get('.header');
 
-    header()
-      .scrollIntoView()
-      .within(() => {
-        const vaBenefitsAndHealthCareButton =
-          '[data-e2e-id="va-benefits-and-health-care-0"]';
+      header()
+        .scrollIntoView()
+        .within(() => {
+          const vaBenefitsAndHealthCareButton =
+            '[data-e2e-id="va-benefits-and-health-care-0"]';
 
-        // VA Benefits and Health Care
-        h.verifyElement(vaBenefitsAndHealthCareButton);
-        h.clickButton(vaBenefitsAndHealthCareButton);
+          // VA Benefits and Health Care
+          h.verifyElement(vaBenefitsAndHealthCareButton);
+          h.clickButton(vaBenefitsAndHealthCareButton);
 
-        // -> Health care
-        h.verifyMenuItems(healthCare, headings, links, viewAll, 'Health care');
+          // -> Health care
+          h.verifyMenuItems(
+            healthCare,
+            headings,
+            links,
+            viewAll,
+            'Health care',
+          );
+
+          // -> Service member benefits
+          h.verifyLink(
+            '[data-e2e-id="vetnav-level2--service-member-benefits"]',
+            'Service member benefits',
+            '/service-member-benefits',
+          );
+
+          // -> Family member benefits
+          h.verifyLink(
+            '[data-e2e-id="vetnav-level2--family-member-benefits"]',
+            'Family member benefits',
+            '/family-member-benefits',
+          );
+        });
+    });
+  });
+
+  describe('mobile menu', () => {
+    it('should correctly load the elements', () => {
+      cy.viewport(400, 1000);
+      cy.visit('/');
+      cy.injectAxeThenAxeCheck();
+
+      const menuSelector = '.header-menu-button';
+      h.verifyElement(menuSelector);
+      h.clickButton(menuSelector);
+
+      const headerNav = () => cy.get('#header-nav-items');
+
+      headerNav().within(() => {
+        const vaBenefitsAndHealthCareButton = () =>
+          cy.get('.header-menu-item-button').eq(0);
+        vaBenefitsAndHealthCareButton().click();
+
+        // -> Service member benefits
+        h.verifyLink(
+          '[data-e2e-id="service-member-benefits"]',
+          'Service member benefits',
+          '/service-member-benefits',
+        );
+
+        // -> Family member benefits
+        h.verifyLink(
+          '[data-e2e-id="family-member-benefits"]',
+          'Family member benefits',
+          '/family-member-benefits',
+        );
+
+        const healthCareButton = () => cy.get('.header-menu-item-button').eq(1);
+        healthCareButton().click();
+
+        const backToMenuButton = () => cy.get('#header-back-to-menu');
+        h.verifyElement(backToMenuButton);
+
+        const headerMenu = () => cy.get('.header-menu');
+
+        headerMenu()
+          .scrollIntoView()
+          .within(() => {
+            for (const link of links) {
+              h.verifyLink(`[data-e2e-id*="${link.id}"]`, link.text, link.href);
+            }
+          });
       });
+    });
   });
 });

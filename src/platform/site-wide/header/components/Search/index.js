@@ -189,7 +189,10 @@ export const Search = ({ searchDropdownComponentEnabled }) => {
         Search
       </label>
 
-      <div className="vads-u-display--flex vads-u-flex-direction--row vads-u-align-items--center">
+      <div
+        id="search-header-dropdown-component"
+        className="vads-u-display--flex vads-u-flex-direction--row vads-u-align-items--center"
+      >
         <input
           className="vads-u-width--full"
           id="header-search"

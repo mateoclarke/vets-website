@@ -3,7 +3,7 @@ import React from 'react';
 import { expect } from 'chai';
 import { shallow } from 'enzyme';
 // Relative imports.
-import { Search } from '.';
+import { Search } from '../components/Search';
 
 describe('Header <Search>', () => {
   it('renders correct content with no props', () => {
