@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default function LocationConfirmation({ onPageChange }) {
+export default function LocationSelector({ onPageChange }) {
   return (
     <body className="page">
       <div className="container">
@@ -24,7 +24,7 @@ export default function LocationConfirmation({ onPageChange }) {
               <button
                 type="button"
                 className="usa-button mo-full-width-btn"
-                onClick={() => onPageChange(4)}
+                onClick={() => onPageChange(3)}
               >
                 Continue
               </button>
@@ -33,7 +33,7 @@ export default function LocationConfirmation({ onPageChange }) {
               <button
                 type="button"
                 className="usa-button usa-button--outline mo-full-width-btn"
-                onClick={() => onPageChange(2)}
+                onClick={() => onPageChange(1)}
               >
                 Back
               </button>
