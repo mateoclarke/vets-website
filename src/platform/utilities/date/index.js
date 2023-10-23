@@ -1,6 +1,5 @@
 import moment from 'moment';
 
-// [wipn8923]\cc
 export function dateToMoment(dateField) {
   return moment({
     year: dateField.year.value,
