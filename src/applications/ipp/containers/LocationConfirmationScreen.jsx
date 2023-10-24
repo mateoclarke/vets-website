@@ -1,20 +1,23 @@
 import React from 'react';
 
-export default function LocationSelector({ onPageChange }) {
+export default function LocationConfirmationScreen({ onPageChange, location }) {
+  const { name } = location.attributes;
+  const { address1, city, state, zip } = location.attributes.address.physical;
+
   return (
     <body className="page">
       <div className="container">
         <div className="white-box">
           <br />
-          <h1>Choose a nearby site</h1>
+          <h1>Confirm your selection</h1>
           <div className="text">
             <p>You have chosen to verify at the following location:</p>
             <p>
-              Baltimore VA Medical Center
+              {name}
               <br />
-              10 Greene Street
+              {address1}
               <br />
-              Baltimore, MD 21201-1524
+              {city}, {state} {zip}
             </p>
             <p>
               Please confirm that this is a location you will be able to visit
@@ -24,7 +27,7 @@ export default function LocationSelector({ onPageChange }) {
               <button
                 type="button"
                 className="usa-button mo-full-width-btn"
-                onClick={() => onPageChange(3)}
+                onClick={() => onPageChange(4)}
               >
                 Continue
               </button>
@@ -32,8 +35,8 @@ export default function LocationSelector({ onPageChange }) {
             <div className="wrapper">
               <button
                 type="button"
-                className="usa-button usa-button--outline mo-full-width-btn"
-                onClick={() => onPageChange(1)}
+                className="usa-button-secondary mo-full-width-btn"
+                onClick={() => onPageChange(2)}
               >
                 Back
               </button>

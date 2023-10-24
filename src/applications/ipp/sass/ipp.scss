@@ -1,17 +1,16 @@
 @import "~@department-of-veterans-affairs/formation/sass/shared-variables";
 
-// *{
-//   font-family: "Public Sans", sans-serif;
-// }
 @font-face {
   font-family: "Public Sans";
   font-style: normal ;
   src: url("/fonts/PublicSans-Regular.woff2") format("woff2"),
-  url("/fonts/PublicSans-Regular.woff") format("woff"),
-  url("/fonts/PublicSans-Regular.ttf") format("ttf");
+    url("/fonts/PublicSans-Regular.woff") format("woff"),
+    url("/fonts/PublicSans-Regular.ttf") format("ttf");
   font-weight: 400; /* Specify the weight you want to use */
   /* Add additional font weights if needed */
 }
+
+$font-sans: "Public Sans", sans-serif;
 
 body {
   font-family: "Public Sans", sans-serif;
@@ -24,6 +23,13 @@ body {
 h1 {
     text-align: left;
     font-family: $font-sans;
+    padding-right: 50px;
+    padding-left: 25px;
+  }
+
+  h1 {
+    text-align: left;
+
     padding-right: 50px;
     padding-left: 25px;
   }
@@ -60,6 +66,7 @@ h1 {
     background-color: $color-white;
     padding: 20px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    max-width: 600px;
 }
 
 /* Responsive sizing for the white box */
@@ -95,4 +102,35 @@ button {
 .mo-full-width-btn {
   width: 100%;
   height: 40;
+  margin-right: 0px;
+}
+
+.map-page {
+  padding-top: 250px;
+  .white-box {
+    margin-top: 300px
+  }
+}
+
+.map-container {
+  height: 400px;
+  width: 100%;
+  margin: 32px 0;
+}
+
+ul {
+  list-style-type: none;
+  padding-left: 0;
+}
+
+.usa-radio h2 {
+  margin-top: 0;
+}
+
+.usa-card {
+  border: 1px solid;
+  border-color: DFE1E2;
+  border-radius: 4px;
+  padding: 24px;
+  margin-bottom: 32px;
 }
